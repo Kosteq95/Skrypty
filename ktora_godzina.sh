@@ -11,3 +11,4 @@ m_zostalo=$((60-$m_now))
 echo "Jest aktualnie $godzina"
 echo "Zostało do końca szychty zostało $h_zostalo:$m_zostalo"
 echo "test"
+echo "Test githuba"
