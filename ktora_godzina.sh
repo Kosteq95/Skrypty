@@ -1,18 +1,21 @@
 #! /bin/bash
 # skrypt dla korposzczura
 
-read -p "Podaj o której kończysz prace" godzina_z minuty_z
+czy_odjac=0
 
-if [ $minuty_z = "00" ]
+read -p "Podaj o której kończysz prace" godzina_z minuty_z
+                   #    &&
+if [ $minuty_z = "00" ] || [ -z $minuty_z ]
 then
     minuty_z=60
+    czy_odjac=1
 fi
 
 godzina="$(($(date +%H)+2))-$(date +%M)"
 h_now=$(($(date +%H)+2))
 m_now=$(date +%M)
 
-h_zostalo=$((godzina_z - h_now - 1))
+h_zostalo=$((godzina_z - h_now - czy_odjac))
 m_zostalo=$((minuty_z-m_now))
 
 echo "Jest aktualnie $godzina"
