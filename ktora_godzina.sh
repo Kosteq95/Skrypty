@@ -2,7 +2,18 @@
 # skrypt dla korposzczura
 
 file_name="/tmp/licznik.sxcz"
+count=0
 
+if [ -e $file_name ]
+then
+
+    count=$(cat $file_name)
+
+fi
+
+count=$((count + 1))
+
+echo $count > $file_name
 
 read -p "Podaj o której kończysz prace" godzina_z minuty_z
 
@@ -40,5 +51,4 @@ m_zostalo=$((minuty_z-m_now))
 
 echo "Jest aktualnie $godzina"
 echo "Zostało do końca szychty zostało $h_zostalo h $m_zostalo min"
-echo "test"
-echo "Test githuba" > plik.txt
+echo "Weź się do roboty sprawdzasz ile do końca już $count raz"
