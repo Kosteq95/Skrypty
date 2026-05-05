@@ -6,4 +6,14 @@
 #                                           - ciężarowe
 #Skrytp ma wykryć nowy typ badź markę pojazdu i utworzyć odpowiednie foldery 
 #"Pasport pojazdu" ma być zapisany jako plik o nazwie numru rejestracyjnego np TK012345.pc
+#
+# -------------- CAR PASSPORT -----------------
+# Marka: .........
+# Model: .........
+# Rocznik: .......
+# Numer rejestracyjny: ..........
+# Data ostatniego przegladu: DD.MM.YYYY
+# Przebieg od ostatniego przeglądu: ...... km
+# Ostania aktualizacja odbyła się  DD.MM.YYYY HH:MM:SS przez "nazwa użytkownika systemu"
+
 
