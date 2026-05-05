@@ -17,19 +17,37 @@
 # Ostania aktualizacja odbyła się  DD.MM.YYYY HH:MM:SS przez "nazwa użytkownika systemu"
 
 
+function pobierz_dane
+{
+    licznik=0
+    while [ -z "$dana" ]
+    do
+        if [ $licznik -gt 3 ]
+        then
+            echo "Nie podano $licznik razy $2" 1>&2
+            kill -term $$
+        fi
+        read -p "Podaj $1 samochodu:"  dana
+        licznik=$((licznik+1))
+    done
+
+    echo $dana
+}
+
+
 typ="osobowe"
 
-if [ $1 = "-c" ]
+if [ "$1" = "-c" ]
 then
     typ="ciezarowe"
-elif [ $1 != "-o" ] && [ -n "$1" ]
+elif [ "$1" != "-o" ] && [ -n "$1" ]
 then
     echo "Błędny parametr określający typ pojazdu" 1>&2
     exit 1
 fi
 
 
-read -p "Podaj markę samochodu: " marka
+marka=$(pobierz_dane "markę" "marki")
 read -p "Podaj model samochodu: " model
 read -p "Podaj rocznik samochodu: " rocznik
 read -p "Podaj numer rejestracyjny: " nr_rej
