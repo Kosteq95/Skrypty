@@ -17,3 +17,20 @@
 # Ostania aktualizacja odbyła się  DD.MM.YYYY HH:MM:SS przez "nazwa użytkownika systemu"
 
 
+read -p "Podaj markę samochodu: " marka
+read -p "Podaj model samochodu: " model
+read -p "Podaj rocznik samochodu: " rocznik
+read -p "Podaj numer rejestracyjny: " nr_rej
+read -p "Podaj datę ostatniego przeglądu (DD.MM.YYYY) i jego przebieg" przeglad przebieg
+
+
+echo "-------------- CAR PASSPORT -----------------
+ Marka: $marka
+ Model: $model
+ Rocznik: $rocznik
+ Numer rejestracyjny: $nr_rej
+ Data ostatniego przegladu: $przeglad
+ Przebieg od ostatniego przeglądu: $przebieg km
+ Ostania aktualizacja odbyła się  $(date +%d).$(date +%m).$(date +%Y) $(date +%R):$(date +%S) przez $USER" > $nr_rej.pc
+ 
+
