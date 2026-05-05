@@ -17,12 +17,27 @@
 # Ostania aktualizacja odbyła się  DD.MM.YYYY HH:MM:SS przez "nazwa użytkownika systemu"
 
 
+typ="osobowe"
+
+if [ $1 = "-c" ]
+then
+    typ="ciezarowe"
+elif [ $1 != "-o" ] && [ -n "$1" ]
+then
+    echo "Błędny parametr określający typ pojazdu" 1>&2
+    exit 1
+fi
+
+
 read -p "Podaj markę samochodu: " marka
 read -p "Podaj model samochodu: " model
 read -p "Podaj rocznik samochodu: " rocznik
 read -p "Podaj numer rejestracyjny: " nr_rej
 read -p "Podaj datę ostatniego przeglądu (DD.MM.YYYY) i jego przebieg" przeglad przebieg
 
+
+file_path="$HOME/Baza_pojazdow/$typ/$marka/"
+mkdir -p $file_path
 
 echo "-------------- CAR PASSPORT -----------------
  Marka: $marka
@@ -31,6 +46,6 @@ echo "-------------- CAR PASSPORT -----------------
  Numer rejestracyjny: $nr_rej
  Data ostatniego przegladu: $przeglad
  Przebieg od ostatniego przeglądu: $przebieg km
- Ostania aktualizacja odbyła się  $(date +%d).$(date +%m).$(date +%Y) $(date +%R):$(date +%S) przez $USER" > $nr_rej.pc
- 
+ Ostania aktualizacja odbyła się  $(date +%d).$(date +%m).$(date +%Y) $(date +%R):$(date +%S) przez $USER" > $file_path/$nr_rej.pc
+
 
