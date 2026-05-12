@@ -60,11 +60,18 @@ done
 
 nr_rej=$(pobierz_dane "numer rejestracyjny" "numeru rejestracyjnego")
 przeglad=$(pobierz_dane "datę ostatniego przeglądu" "daty przeglądu")
+
 dzien=$(echo "$przeglad" | cut -d "." -f 1)
 miesiac=$(echo "$przeglad" | cut -d "." -f 2)
 rok=$(echo "$przeglad" | cut -d "." -f 3)
 
-while ! [[ $przeglad == [0-3][0-9].[03-1][0-9].20[0-9][0-9] ]]
+set +e
+
+zmienna=$(echo "$przeglad"| grep -ciE "[A-Z]")
+echo $zmienna
+echo test
+#while ! [[ $przeglad == [0-3][0-9].[03-1][0-9].20[0-9][0-9] ]]
+while [[ $dzien -lt 0 ]] || [[ $dzien -gt 31 ]] || [[ $miesiac -lt 0 ]] || [[ $miesiac -gt 12 ]] || [[ $rok -lt $(($(date +%Y)-20)) ]] || [[ $rok -gt $(date +%Y) ]]
 do
     echo "Podana data jest nie zgodna z formatem DD.MM.YYYY!"
     przeglad=$(pobierz_dane "datę ostatniego przeglądu" "daty przeglądu")
