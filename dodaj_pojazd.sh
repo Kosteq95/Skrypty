@@ -15,7 +15,7 @@
 # Data ostatniego przegladu: DD.MM.YYYY
 # Przebieg od ostatniego przeglądu: ...... km
 # Ostania aktualizacja odbyła się  DD.MM.YYYY HH:MM:SS przez "nazwa użytkownika systemu"
-
+set -e
 
 function pobierz_dane
 {
@@ -25,7 +25,7 @@ function pobierz_dane
         if [ $licznik -gt 3 ]
         then
             echo "Nie podano $licznik razy $2" 1>&2
-            kill -term $$
+            exit 2
         fi
         read -p "Podaj $1 samochodu:"  dana
         licznik=$((licznik+1))
@@ -48,10 +48,30 @@ fi
 
 
 marka=$(pobierz_dane "markę" "marki")
-read -p "Podaj model samochodu: " model
-read -p "Podaj rocznik samochodu: " rocznik
-read -p "Podaj numer rejestracyjny: " nr_rej
-read -p "Podaj datę ostatniego przeglądu (DD.MM.YYYY) i jego przebieg" przeglad przebieg
+model=$(pobierz_dane "model" "modelu")
+rocznik=$(pobierz_dane "rocznik" "rocznika")
+
+while ! ([[ $rocznik -gt 1890 ]] && [[ $rocznik -le $(date +%Y) ]])
+do
+    echo "Podana podaj rocznik z zakresu 1890-$(date +%Y)!"
+    rocznik=$(pobierz_dane "rocznik" "rocznika")
+done
+
+
+nr_rej=$(pobierz_dane "numer rejestracyjny" "numeru rejestracyjnego")
+przeglad=$(pobierz_dane "datę ostatniego przeglądu" "daty przeglądu")
+dzien=$(echo "$przeglad" | cut -d "." -f 1)
+miesiac=$(echo "$przeglad" | cut -d "." -f 2)
+rok=$(echo "$przeglad" | cut -d "." -f 3)
+
+while ! [[ $przeglad == [0-3][0-9].[03-1][0-9].20[0-9][0-9] ]]
+do
+    echo "Podana data jest nie zgodna z formatem DD.MM.YYYY!"
+    przeglad=$(pobierz_dane "datę ostatniego przeglądu" "daty przeglądu")
+done
+
+przebieg=$(pobierz_dane "przebieg" "przebiegu")
+
 
 
 file_path="$HOME/Baza_pojazdow/$typ/$marka/"
