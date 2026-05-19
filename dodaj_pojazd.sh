@@ -49,12 +49,27 @@ fi
 
 marka=$(pobierz_dane "markę" "marki")
 model=$(pobierz_dane "model" "modelu")
-rocznik=$(pobierz_dane "rocznik" "rocznika")
 
-while ! ([[ $rocznik -gt 1890 ]] && [[ $rocznik -le $(date +%Y) ]])
+
+isok=0
+
+while [ $isok -eq 0 ]
 do
-    echo "Podana podaj rocznik z zakresu 1890-$(date +%Y)!"
     rocznik=$(pobierz_dane "rocznik" "rocznika")
+    set +e
+    zmienna=$(echo "$rocznik" | grep -ciE "^[0-9]+$")
+    echo $zmienna
+    set -e
+    if [ $zmienna == "0" ]
+    then
+        echo "Podano tekst"
+    elif ([[ $rocznik -lt 1890 ]] || [[ $rocznik -gt $(date +%Y) ]]) 
+    then
+        echo "Podaj rocznik z zakresu 1890-$(date +%Y)!"
+    else
+        isok=1
+    fi
+
 done
 
 
